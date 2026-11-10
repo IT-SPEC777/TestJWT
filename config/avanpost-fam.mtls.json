@@ -1,0 +1,10 @@
+{
+  "OAuth": {
+    "AuthMethod": "TlsClientAuth",
+    "TokenEndpoint": "https://fam.example.local/<путь из token_endpoint в discovery-документе>",
+    "ClientId": "my-service",
+    "ClientCertificatePath": "./secrets/mtls/client.crt",
+    "ClientCertificateKeyPath": "./secrets/mtls/client.key",
+    "ServerCaCertificatePath": "./secrets/corp-root-ca.crt"
+  }
+}

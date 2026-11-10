@@ -1,0 +1,9 @@
+{
+  "OAuth": {
+    "AuthMethod": "TlsClientAuth",
+    "TokenEndpoint": "https://keycloak.example.com:8443/realms/demo/protocol/openid-connect/token",
+    "ClientId": "my-service",
+    "ClientCertificatePath": "./secrets/mtls/client.pfx",
+    "ServerCaCertificatePath": "./secrets/mtls/ca.crt"
+  }
+}

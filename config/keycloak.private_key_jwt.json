@@ -1,0 +1,10 @@
+{
+  "OAuth": {
+    "AuthMethod": "PrivateKeyJwt",
+    "TokenEndpoint": "http://localhost:5050/realms/master/protocol/openid-connect/token",
+    "Audience": "http://localhost:5050/realms/master",
+    "ClientId": "my-service",
+    "KeyId": "MskTvTx9yFxZl288DI27kW-IhTXzqOcmo9X6tYnWfwU",
+    "PrivateKeyPath": "config/secrets/private.pem"
+  }
+}

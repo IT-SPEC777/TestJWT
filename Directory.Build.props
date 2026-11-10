@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Целевая платформа. Для .NET 8: dotnet build -p:TargetFramework=net8.0 (см. README) -->
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NuGetAudit>true</NuGetAudit>
+    <Authors>Integration team</Authors>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+</Project>

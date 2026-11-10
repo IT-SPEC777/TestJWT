@@ -1,0 +1,11 @@
+{
+  "OAuth": {
+    "AuthMethod": "PrivateKeyJwt",
+    "TokenEndpoint": "https://fam.example.local/<путь из token_endpoint в discovery-документе>",
+    "Audience": "<значение aud, которое ожидает FAM: token_endpoint или issuer>",
+    "ClientId": "my-service",
+    "KeyId": "my-key-1",
+    "PrivateKeyPath": "./secrets/private.pem",
+    "ServerCaCertificatePath": "./secrets/corp-root-ca.crt"
+  }
+}

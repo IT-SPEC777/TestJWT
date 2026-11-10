@@ -1,0 +1,66 @@
+# GitFlic CI/CD для oauth-m2m-client
+# Файл должен называться gitflic-ci.yaml и лежать в корне репозитория.
+# Требуется зарегистрированный агент (runner) с Docker-исполнителем и доступом к
+#   - образу mcr.microsoft.com/dotnet/sdk:10.0 (или вашему внутреннему зеркалу);
+#   - NuGet-источнику из nuget.config (nuget.org или внутренний прокси).
+
+stages:
+  - build
+  - test
+  - publish
+
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "1"
+  NUGET_PACKAGES: "$CI_PROJECT_DIR/.nuget/packages"
+  CONFIGURATION: "Release"
+
+# Кэш NuGet-пакетов между запусками
+cache:
+  key: nuget-$CI_COMMIT_REF_NAME
+  paths:
+    - .nuget/packages/
+
+# 1. Сборка (проверка компиляции всего решения)
+build:
+  stage: build
+  image:
+    name: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - dotnet --info
+    - dotnet restore OAuthM2M.sln
+    - dotnet build OAuthM2M.sln --configuration $CONFIGURATION --no-restore
+
+# 2. Юнит-тесты + покрытие (Cobertura XML и TRX лежат в артефактах)
+test:
+  stage: test
+  image:
+    name: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - dotnet restore OAuthM2M.sln
+    - >
+      dotnet test OAuthM2M.sln
+      --configuration $CONFIGURATION
+      --no-restore
+      --logger "trx;LogFileName=test-results.trx"
+      --collect:"XPlat Code Coverage"
+      --results-directory ./TestResults
+  artifacts:
+    paths:
+      - TestResults/
+    expire_in: 14 days
+
+# 3. Публикация CLI (framework-dependent, переносимый между ОС)
+publish:
+  stage: publish
+  image:
+    name: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - dotnet restore src/OAuthM2M.Cli/OAuthM2M.Cli.csproj
+    - dotnet publish src/OAuthM2M.Cli/OAuthM2M.Cli.csproj --configuration $CONFIGURATION --no-restore --output publish/oauth-m2m
+    - cp -r config publish/oauth-m2m/config
+  artifacts:
+    paths:
+      - publish/
+    expire_in: 30 days

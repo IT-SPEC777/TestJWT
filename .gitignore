@@ -1,0 +1,24 @@
+## .NET
+bin/
+obj/
+publish/
+TestResults/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+*.log
+.nuget/
+
+## Секреты — НИКОГДА не коммитить
+secrets/
+*.pem
+*.key
+*.pfx
+*.p12
+*.jks
+*.csr
+*.srl
+appsettings.*.local.json
+.env
